@@ -9,22 +9,37 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
-## R Markdown
-
-This is an R Markdown document. Markdown is a simple formatting syntax for authoring HTML, PDF, and MS Word documents. For more details on using R Markdown see <http://rmarkdown.rstudio.com>.
-
-When you click the **Knit** button a document will be generated that includes both content as well as the output of any embedded R code chunks within the document. You can embed an R code chunk like this:
-
-```{r cars}
-summary(cars)
+```{r}
+  library(ggplot2)
 ```
 
-## Including Plots
-
-You can also embed plots, for example:
-
-```{r pressure, echo=FALSE}
-plot(pressure)
+```{r}
+  happy <- readRDS("HAPPY.rds")
+  names(happy) = tolower(names(happy))
+  head(happy)
 ```
 
-Note that the `echo = FALSE` parameter was added to the code chunk to prevent printing of the R code that generated the plot.
+```{r}
+  happy[happy=="NA"] <- NA
+  happy[happy=="DK"] <- NA
+  happy[happy=="IAP"] <- NA
+```
+
+```{r}
+  happy[happy=="89 OR OLDER"] <- 89
+  happy$age <- as.numeric(happy$age)
+  happy$happy <- factor(happy$happy, levels = c("NOT TOO HAPPY", "PRETTY HAPPY", "VERY HAPPY"))
+  levels(happy$happy)
+  happy$sex <- factor(happy$sex, levels = c("FEMALE", "MALE"))
+  levels(happy$sex)
+  happy$marital <- factor(happy$marital, levels = c("NEVER MARRIED", "MARRIED", "SEPARATED", "DIVORCED", "WIDOWED"))
+  levels(happy$marital)
+  happy$degree <- factor(happy$degree, levels = c("LT HIGH SCHOOL", "HIGH SCHOOL", "JUNIOR COLLEGE", "BACHELOR", "GRADUATE"))
+  levels(happy$degree)
+  happy$finrela <- factor(happy$finrela, levels = c("FAR BELOW AVERAGE", "BELOW AVERAGE", "AVERAGE", "ABOVE AVERAGE", "FAR ABOVE AVERAGE"))
+  levels(happy$finrela)
+  happy$health <- factor(happy$health, levels = c("POOR", "FAIR", "GOOD", "EXCELLENT"))
+  levels(happy$health)
+  happy$partyid <- factor(happy$partyid, levels = c("STRONG DEMOCRAT", "NOT STR DEMOCRAT",  "IND,NEAR DEM", "INDEPENDENT", "IND,NEAR REP", "NOT STR REPUBLICAN", "STRONG REPUBLICAN", "OTHER PARTY"))
+  levels(happy$partyid)
+```
