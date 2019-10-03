@@ -5,6 +5,9 @@ date: "9/26/2019"
 output: html_document
 ---
 
+Owner Github: mitchellkazin15
+Partner Github: Cygorp
+Repo Link: https://github.com/mitchellkazin15/ds202_lab3
 ```{r setup, include=FALSE}
 knitr::opts_chunk$set(echo = TRUE)
 ```
