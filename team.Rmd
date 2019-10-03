@@ -9,6 +9,9 @@ output: html_document
 knitr::opts_chunk$set(echo = TRUE)
 ```
 
+
+## Part 1: Data Cleaning
+
 ```{r}
   library(ggplot2)
 ```
@@ -19,12 +22,14 @@ knitr::opts_chunk$set(echo = TRUE)
   head(happy)
 ```
 
+The data first needed to be cleaned by replacing certain values with NA. This was done with the following R code.
 ```{r}
   happy[happy=="NA"] <- NA
   happy[happy=="DK"] <- NA
   happy[happy=="IAP"] <- NA
 ```
 
+Next the data needed to be standardized. In the following R code, age was converted to a numeric column, and the other non-numeric columns were converted to factors so they could easily be grouped. Finally the levels were reorganized into a logical order.
 ```{r}
   happy[happy=="89 OR OLDER"] <- 89
   happy$age <- as.numeric(happy$age)
@@ -42,4 +47,16 @@ knitr::opts_chunk$set(echo = TRUE)
   levels(happy$health)
   happy$partyid <- factor(happy$partyid, levels = c("STRONG DEMOCRAT", "NOT STR DEMOCRAT",  "IND,NEAR DEM", "INDEPENDENT", "IND,NEAR REP", "NOT STR REPUBLICAN", "STRONG REPUBLICAN", "OTHER PARTY"))
   levels(happy$partyid)
+```
+
+## Part 2: Data Exploration
+
+The following R code produces the distribution of ages in the dataset. From the Frequency Polygon, it can be determined that the most common ages surveyed are between 25 and 35 with a steady decline after.
+```{r}
+    ggplot(happy,aes(age)) + geom_freqpoly(binwidth=5) + ggtitle("Distribution of Age") + xlab("Age") + ylab("Count")
+```
+
+To get an idea about the average level of happiness in the dataset, a barchart was used. The majority of people define themselves as pretty happy to happy with a far fewer amount describing themselves as not too happy.
+```{r}
+    ggplot(subset(happy, !is.na(happy)) ,aes(happy)) + geom_bar() + ggtitle("Distribution of Happiness") + xlab("Happiness Level") + ylab("Count")
 ```
